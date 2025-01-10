@@ -1,0 +1,23 @@
+.projects {
+   background-color: #f4f4f4;
+   padding: 2rem 0;
+ }
+ h2 {
+   text-align: center;
+ }
+ .project-list {
+   display: flex;
+   gap: 2rem;
+   justify-content: center;
+ }
+ .project {
+   background: #fff;
+   padding: 1rem;
+   border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   text-align: center;
+ }
+ .project img {
+   max-width: 100%;
+   border-radius: 4px;
+ }
