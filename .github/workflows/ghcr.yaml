@@ -14,3 +14,19 @@ jobs:
            docker login --username robanstha --password ${{ secrets.GH_PAT }} ghcr.io
            docker build . --tag ghcr.io/robanstha/portfolio-angular-frontend:latest
            docker push ghcr.io/robanstha/portfolio-angular-frontend:latest
+
+  build-and-deploy:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+
+        - name: Build Docker image
+          run: docker build -f Dockerfile.prod . --tag ghcr.io/robanstha/portfolio-angular-frontend:latest
+
+        - name: Deploy to GitHub Pages
+          uses: peaceiris/actions-gh-pages@v3
+          with:
+            github_token: ${{ secrets.GH_PAT }}
+            publish_dir: ./src/dist/angular-frontend/browser

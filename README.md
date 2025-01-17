@@ -53,13 +53,6 @@ http://localhost:4200
 
 You should now see your Angular application running inside the container.
 
-### 5. Build the Angular Application
-
-Compile the Angular application for production:
-```
-ng build --prod
-```
-
 ## 🗂️ Project Structure
 
 portfolio-angular-frontend/
