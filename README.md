@@ -3,7 +3,7 @@
 ![Angular](https://img.shields.io/badge/Angular-%23DD0031.svg?style=for-the-badge&logo=angular&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-![License](https://img.shields.io/github/license/robanstha/base-angular-container?style=for-the-badge)
+![License](https://img.shields.io/github/license/robanstha/portfolio-angular-frontend?style=for-the-badge)
 
 ---
 
@@ -28,47 +28,41 @@ Ensure the following tools are installed on your system:
 
 ### 1. Clone the Repository
 ```
-git clone https://github.com/robanstha/base-angular-container.git
-cd base-angular-container
+git clone https://github.com/robanstha/portfolio-angular-frontend.git
+cd portfolio-angular-frontend
 ```
 
-### 2. Install Dependencies
-```
-Run the following command to install all required Node.js dependencies:
-npm install
-```
-
-### 3. Build the Angular Application
-
-Compile the Angular application for production:
-```
-ng build --prod
-```
-
-### 4. Build the Docker Image
+### 2. Build the Docker Image
 
 Use Docker compose to build the container image for your Angular application:
 ```
 docker-compose build
 ```
 
-### 5. Run the Docker Container
+### 3. Run the Docker Container
 
 Start the Docker container and expose it on port 4200:
 ```
 docker-compose up
 ```
 
-### 6. Open the Application
+### 4. Open the Application
 
 Open your browser and navigate to:
 http://localhost:4200
 
 You should now see your Angular application running inside the container.
 
+### 5. Build the Angular Application
+
+Compile the Angular application for production:
+```
+ng build --prod
+```
+
 ## 🗂️ Project Structure
 
-base-angular-container/
+portfolio-angular-frontend/
 ├── src/               # Angular source files
 ├── Dockerfile         # Docker configuration
 ├── angular.json       # Angular CLI configuration
