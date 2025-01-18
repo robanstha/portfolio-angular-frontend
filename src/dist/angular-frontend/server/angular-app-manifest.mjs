@@ -6,8 +6,8 @@ export default {
   locale: undefined,
   routes: undefined,
   assets: {
-    'index.csr.html': {size: 499, hash: 'e0251c82bad169690328efa19613b8f310db0c2e69c78d079f5eeac9b3d9b09a', text: () => import('./assets-chunks/index_csr_html.mjs').then(m => m.default)},
-    'index.server.html': {size: 1012, hash: '12c20d7b1d35e3d9cae333e9a8b2c115dd38c69a872e23ed6f09f1a734e034fb', text: () => import('./assets-chunks/index_server_html.mjs').then(m => m.default)},
-    'styles-5INURTSO.css': {size: 0, hash: 'menYUTfbRu8', text: () => import('./assets-chunks/styles-5INURTSO_css.mjs').then(m => m.default)}
+    'index.csr.html': {size: 706, hash: '2b93983db0323a1de99734f3f93fad825d5070d778eeb4744f47a56da1f40d1d', text: () => import('./assets-chunks/index_csr_html.mjs').then(m => m.default)},
+    'index.server.html': {size: 1009, hash: 'ac38ed7af53e50f70f6ebe414ea958f49ccba3fe83e5f12c7a0c005ae29ef4a8', text: () => import('./assets-chunks/index_server_html.mjs').then(m => m.default)},
+    'styles-SPT32HZK.css': {size: 108, hash: 'n+PNe7ENJS0', text: () => import('./assets-chunks/styles-SPT32HZK_css.mjs').then(m => m.default)}
   },
 };

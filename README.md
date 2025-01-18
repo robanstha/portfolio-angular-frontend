@@ -36,14 +36,14 @@ cd portfolio-angular-frontend
 
 Use Docker compose to build the container image for your Angular application:
 ```
-docker-compose build
+make build
 ```
 
 ### 3. Run the Docker Container
 
 Start the Docker container and expose it on port 4200:
 ```
-docker-compose up
+make up
 ```
 
 ### 4. Open the Application
