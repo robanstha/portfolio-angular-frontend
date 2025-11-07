@@ -1,23 +1,24 @@
-# Stage 1: Compile and Build angular codebase
-
-FROM node:alpine as builder
-
-RUN mkdir -p /src
+# Stage 1: Compile and build Angular app
+FROM node:18-bullseye-slim AS builder
 
 WORKDIR /src
 
-ADD src/package.json /src/package.json
+# Copy package files from the repo's src directory and install dependencies
+COPY src/package*.json ./
+RUN npm ci --legacy-peer-deps
 
-RUN npm install
+# Copy remaining source files
+COPY src/ .
 
-COPY src/ /src/
+# Build production bundle; ensure output goes to /src/dist
+# Use the Angular CLI production configuration if available
+RUN npm run build -- --configuration production --output-path=dist
 
-RUN npm run build --prod
+# Stage 2: Serve app with nginx
+FROM nginx:alpine AS runtime
 
-# Stage 2: Serve app with nginx server
-
-FROM nginx:alpine
-
-COPY --from=builder /src/dist/angular-frontend /usr/share/nginx/html
+# Copy production build output from builder
+COPY --from=builder /src/dist/ /usr/share/nginx/html
 
 EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
