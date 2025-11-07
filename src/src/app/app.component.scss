@@ -1,17 +1,29 @@
+:root{
+  --bg:#071017;
+  --panel: rgba(255,255,255,0.03);
+  --muted-text: #9fb6c9;
+  --text: #e6eef8;
+  --accent: #39d3ff;
+  --glass: rgba(255,255,255,0.03);
+}
+
 .app-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
+  background: linear-gradient(180deg,var(--bg), #041018 140%);
+  color: var(--text);
 }
 
 .main-content {
   flex: 1;
-  padding-top: 80px; // To account for fixed header
+  padding-top: 72px; /* To account for fixed header */
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   overflow-x: hidden;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 button{
@@ -293,4 +305,22 @@ position: fixed;
 -moz-transform: translate(95vw,90vh);
 transform: translate(95vw,90vh);
 transform: translate(95vw,90vh);
+}
+
+/* reveal helper for appScrollReveal */
+[appScrollReveal], .reveal {
+  opacity: 0;
+  transform: translateY(18px) scale(0.998);
+  will-change: opacity, transform;
+}
+
+.reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: opacity 420ms ease, transform 420ms ease;
+}
+
+/* reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  [appScrollReveal], .reveal { transition: none !important; transform: none !important; opacity: 1 !important; }
 }

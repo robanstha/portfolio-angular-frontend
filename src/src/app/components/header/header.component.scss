@@ -3,11 +3,11 @@
   top: 0;
   left: 0;
   right: 0;
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(5px);
+  background-color: rgba(10, 12, 16, 0.6);
+  backdrop-filter: blur(6px);
   z-index: 1000;
-  padding: 1rem 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 0;
+  box-shadow: 0 6px 20px rgba(2, 6, 12, 0.4);
 
   .container {
     display: flex;
@@ -19,9 +19,9 @@
   }
 
   .logo {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 700;
-    color: #0066cc;
+    color: var(--accent, #39d3ff);
     text-decoration: none;
     transition: color 0.3s ease;
 
@@ -35,7 +35,7 @@
     gap: 2rem;
 
     .nav-link {
-      color: #333;
+      color: var(--muted-text, #c7d7e6);
       text-decoration: none;
       font-weight: 500;
       transition: color 0.3s ease;
@@ -45,10 +45,26 @@
       }
 
       &.active {
-        color: #0066cc;
+        color: var(--accent, #39d3ff);
       }
     }
   }
+}
+
+.progress-wrap{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+}
+.progress{
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent, #39d3ff), #7ae7ff);
+  transform-origin: left center;
+  transition: width 120ms linear;
 }
  .logo {
    font-size: 1.5rem;

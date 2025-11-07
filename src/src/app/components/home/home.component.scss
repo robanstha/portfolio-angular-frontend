@@ -1,90 +1,105 @@
 .home-container {
   display: flex;
   flex-direction: column;
-  padding: 4rem 2rem;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.hero-section {
+  min-height: calc(100vh - 72px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  min-height: 100vh;
-  background-color: #ffffff;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
 }
 
 .intro-section {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 4rem;
+  gap: 1.5rem;
 
   h1 {
-    font-size: 3.5rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 700;
-    margin-bottom: 1rem;
+    line-height: 1.1;
+    margin: 0;
 
     .name {
-      color: #0066cc;
+      display: block;
+      color: var(--accent);
+      font-size: 1.1em;
     }
   }
 
   .tagline {
-    font-size: 1.5rem;
-    color: #666;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    color: var(--muted-text);
     max-width: 600px;
-    margin-bottom: 2rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+
+    @media (max-width: 768px) {
+      justify-content: center;
+    }
   }
 
   .cta-button {
-    background-color: #0066cc;
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
+    padding: 0.75rem 1.5rem;
     font-size: 1rem;
     font-weight: 600;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: transform 0.2s ease, background-color 0.2s ease;
 
     &:hover {
-      background-color: #0052a3;
+      transform: translateY(-2px);
+    }
+
+    &.primary {
+      background: linear-gradient(135deg, var(--accent), #7ae7ff);
+      border: none;
+      color: #000;
+    }
+
+    &.secondary {
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--accent);
     }
   }
 }
 
 .profile-section {
-  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .profile-image {
-    max-width: 400px;
     width: 100%;
+    max-width: 400px;
     height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  }
-}
-
-.skills-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 4rem;
-
-  .skill-card {
-    padding: 2rem;
-    background-color: #f8f9fa;
-    border-radius: 8px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
 
     &:hover {
       transform: translateY(-5px);
-    }
-
-    h3 {
-      color: #0066cc;
-      font-size: 1.25rem;
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-
-    p {
-      color: #666;
-      line-height: 1.6;
     }
   }
 }

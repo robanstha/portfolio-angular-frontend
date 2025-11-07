@@ -1,0 +1,23 @@
+.contact {
+  padding: 3rem 1.5rem;
+
+  h2 { color: #e6eef8; margin-bottom: .75rem; }
+
+  .contact-form {
+    display: grid;
+    gap: .75rem;
+    max-width: 720px;
+
+    input, textarea {
+      width: 100%;
+      padding: .75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+      color: #e6eef8;
+      resize: vertical;
+    }
+
+    .btn.primary { margin-top: .5rem; }
+  }
+}

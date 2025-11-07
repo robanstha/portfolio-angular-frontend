@@ -1,0 +1,46 @@
+.timeline-section {
+  padding: 4rem 1.5rem;
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #e6eef8;
+  }
+
+  .timeline-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 420ms ease, transform 420ms ease;
+
+    &.reveal {
+      opacity: 1;
+      transform: none;
+    }
+
+    .node {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #39d3ff, #7ae7ff);
+      flex: 0 0 14px;
+      margin-top: 6px;
+    }
+
+    .content {
+      color: #cfe8ff;
+      h3 { margin: 0 0 .5rem 0; color: #ffffff; }
+      p { margin: 0; color: #b9d7ef; }
+    }
+  }
+}
