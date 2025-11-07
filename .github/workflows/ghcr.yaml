@@ -1,33 +1,78 @@
-name: Docker Image CI for GHCR
+name: Build, publish GHCR image and deploy site to gh-pages
 
 on:
-  push
+  push:
+    branches: [ main ]
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build-and-push:
+    name: Build & Push Docker image to GHCR
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GH_PAT }}" | docker login ghcr.io -u robanstha --password-stdin
+
       - name: Build and Push the image to GHCR
         run: |
-           docker login --username robanstha --password ${{ secrets.GH_PAT }} ghcr.io
-           docker build . --tag ghcr.io/robanstha/portfolio-angular-frontend:latest
-           docker push ghcr.io/robanstha/portfolio-angular-frontend:latest
+          docker build . -f Dockerfile -t ghcr.io/robanstha/portfolio-angular-frontend:latest
+          docker push ghcr.io/robanstha/portfolio-angular-frontend:latest
 
   build-and-deploy:
-      runs-on: ubuntu-latest
+    name: Build site and deploy to gh-pages
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
 
-        - name: Build Docker image
-          run: docker build -f Dockerfile.prod . --tag ghcr.io/robanstha/portfolio-angular-frontend:latest
+      - name: Install dependencies
+        working-directory: src
+        run: npm ci --legacy-peer-deps
 
-        - name: Deploy to GitHub Pages
-          uses: peaceiris/actions-gh-pages@v3
-          with:
-            github_token: ${{ secrets.GH_PAT }}
-            publish_dir: ./src/dist/angular-frontend/browser
-            publish_branch: gh-pages
+      - name: Build (production)
+        working-directory: src
+        run: npm run build -- --configuration=production --output-path=dist
+
+      - name: Normalize dist path
+        run: |
+          DIST=src/dist
+          # if dist contains a single nested folder (common when Angular outputs dist/<project>), use it
+          entries=$(ls -A "$DIST") || true
+          if [ "$(echo "$entries" | wc -l)" -eq 1 ] && [ -d "$DIST/$entries" ]; then
+            DIST="$DIST/$entries"
+          fi
+          echo "DIST=$DIST" >> $GITHUB_ENV
+
+      - name: Create 404.html for SPA routing
+        run: |
+          if [ -z "${DIST}" ]; then
+            echo "ERROR: DIST environment variable not set"; exit 1
+          fi
+          if [ ! -f "${DIST}/index.html" ]; then
+            echo "ERROR: index.html not found in ${DIST}"; ls -la "${DIST}"; exit 1
+          fi
+          cp "${DIST}/index.html" "${DIST}/404.html"
+
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GH_PAT }}
+          publish_dir: ${{ env.DIST }}
+          publish_branch: gh-pages
