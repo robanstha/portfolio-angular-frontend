@@ -1,12 +1,9 @@
-<section class="projects" id="projects">
-   <div class="container">
-     <h2>My Projects</h2>
-     <div class="project-list">
-       <div class="project" *ngFor="let project of projects">
-         <img [src]="project.image" alt="{{ project.title }}" />
-         <h3>{{ project.title }}</h3>
-         <p>{{ project.description }}</p>
-       </div>
-     </div>
-   </div>
- </section>
+<div class="projects-section">
+  <h2>My Projects</h2>
+  <div class="project-card" *ngFor="let project of projects" [@fadeIn]>
+    <img [src]="project.image" alt="{{ project.title }}">
+    <h3>{{ project.title }}</h3>
+    <p>{{ project.description }}</p>
+    <button (click)="viewDetails(project)">View Details</button>
+  </div>
+</div>

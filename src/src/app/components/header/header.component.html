@@ -1,12 +1,10 @@
 <header class="header">
-   <div class="container">
-     <h1 class="logo">My Portfolio</h1>
-     <nav>
-       <ul>
-         <li><a href="#hero">Home</a></li>
-         <li><a href="#projects">Projects</a></li>
-         <li><a href="#contact">Contact</a></li>
-       </ul>
-     </nav>
-   </div>
- </header>
+  <div class="container">
+    <a href="/" class="logo">YN</a>
+    <nav class="nav-links">
+      <a href="/" class="nav-link" [routerLink]="['/']" [routerLinkActive]="['active']">Home</a>
+      <a href="/projects" class="nav-link" [routerLink]="['/projects']" [routerLinkActive]="['active']">Projects</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+  </div>
+</header>

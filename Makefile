@@ -22,15 +22,18 @@ up: ## Start docker container
 # Details: https://stackoverflow.com/questions/50608301/docker-mounted-volume-adds-c-to-end-of-windows-path-when-translating-from-linux
 	@if [ "$$OSTYPE" == 'msys' ]; then \
 		echo "Creating container on MSYS"; \
-		docker run -m 2g --name portfolio-angular-frontend -it --rm -p 4200:4200  -v "/$${PWD}/src:/src" portfolio-angular-frontend npm start; \
+		docker run -m 3g --name portfolio-angular-frontend -it --rm -p 4200:4200  -v "/$${PWD}/src:/src" portfolio-angular-frontend npm start; \
 	else \
 		echo "Creating container on on $$OSTYPE"; \
-		docker run -m 2g --name portfolio-angular-frontend -it --rm -p 4200:4200  -v "/$${PWD}/src:/src" portfolio-angular-frontend npm start; \
+		docker run -m 3g --name portfolio-angular-frontend -it --rm -p 4200:4200  -v "/$${PWD}/src:/src" portfolio-angular-frontend npm start; \
 	fi
+
+shell: ## Exec into the running docker container:
+	docker exec -it portfolio-angular-frontend bash
 
 deploy: ## Run ng build to generate html files
 	@if [ "$$OSTYPE" == 'msys' ]; then \
-		docker run -m 2g -it  -v "/$${PWD}/src:/src" portfolio-angular-frontend ng build; \
+		docker run -m 3g -it  -v "/$${PWD}/src:/src" portfolio-angular-frontend ng build; \
 	else \
-		docker run -m 2g -it  -v "$${PWD}/src:/src" portfolio-angular-frontend ng build; \
+		docker run -m 3g -it  -v "$${PWD}/src:/src" portfolio-angular-frontend ng build; \
 	fi

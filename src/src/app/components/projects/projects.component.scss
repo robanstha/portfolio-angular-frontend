@@ -1,23 +1,27 @@
-.projects {
-   background-color: #f4f4f4;
-   padding: 2rem 0;
- }
- h2 {
-   text-align: center;
- }
- .project-list {
-   display: flex;
-   gap: 2rem;
-   justify-content: center;
- }
- .project {
-   background: #fff;
-   padding: 1rem;
-   border-radius: 8px;
-   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-   text-align: center;
- }
- .project img {
-   max-width: 100%;
-   border-radius: 4px;
- }
+.projects-section {
+  text-align: center;
+  margin: 50px auto;
+  max-width: 1200px;
+}
+
+.project-card {
+  display: inline-block;
+  margin: 20px;
+  width: 300px;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.project-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
