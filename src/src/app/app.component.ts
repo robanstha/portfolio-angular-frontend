@@ -1,17 +1,34 @@
-import { Component } from '@angular/core';
-import { HeaderComponent } from './components/header/header.component'; // Import HeaderComponent
-import { FooterComponent } from './components/footer/footer.component'; // Import FooterComponent
-import { RouterModule } from '@angular/router'; // Import RouterModule for routing
+import { Component, OnInit } from '@angular/core';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { ScrollProgressService } from './shared/scroll-progress.service';
+import { ThemeService } from './shared/theme.service';
+import { ScrollRevealDirective } from './shared/scroll-reveal.directive';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   standalone: true,
+  imports: [AsyncPipe, NgIf, ScrollRevealDirective],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  imports: [
-    HeaderComponent,  // Add imported components here
-    FooterComponent,  // FooterComponent
-    RouterModule,     // RouterModule for <router-outlet>
-  ],
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent {}
+export class AppComponent implements OnInit {
+  scrollProgress$: Observable<number>;
+  isDark$: Observable<boolean>;
+
+  constructor(
+    private scrollProgressService: ScrollProgressService,
+    private themeService: ThemeService
+  ) {
+    this.scrollProgress$ = this.scrollProgressService.scrollProgress$;
+    this.isDark$ = this.themeService.isDark$;
+  }
+
+  ngOnInit(): void {
+    // Scroll progress is initialized in the service constructor
+  }
+
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
+  }
+}
