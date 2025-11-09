@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeService } from './shared/theme.service';
 import { Observable } from 'rxjs';
