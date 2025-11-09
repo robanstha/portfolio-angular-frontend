@@ -52,7 +52,7 @@ export class ThemeService {
 
   private setTheme(isDark: boolean): void {
     if (!isPlatformBrowser(this.platformId)) return;
-    
+
     this.darkMode.next(isDark);
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
 
