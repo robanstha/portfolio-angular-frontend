@@ -1,3 +1,27 @@
+/* Theme Variables */
+:root {
+  --primary: #2563eb;
+  --primary-light: #3b82f6;
+  --text: #1f2937;
+  --text-light: #4b5563;
+  --background: #ffffff;
+  --background-alt: #f3f4f6;
+  --border: #e5e7eb;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Theme */
+.dark-theme {
+  --primary: #3b82f6;
+  --primary-light: #60a5fa;
+  --text: #f9fafb;
+  --text-light: #d1d5db;
+  --background: #111827;
+  --background-alt: #1f2937;
+  --border: #374151;
+  --shadow: rgba(0, 0, 0, 0.25);
+}
+
 /* Reset & Base Styles */
 *, *::before, *::after {
   box-sizing: border-box;
