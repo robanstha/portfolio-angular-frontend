@@ -11,7 +11,7 @@ export class ThemeService {
   constructor() {
     // Apply initial theme
     this.setTheme(this.darkMode.value);
-    
+
     // Listen for system theme changes
     if (window.matchMedia) {
       window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
@@ -30,12 +30,12 @@ export class ThemeService {
     if (storedTheme) {
       return storedTheme === 'dark';
     }
-    
+
     // Fallback to system preference
     if (window.matchMedia) {
       return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
-    
+
     // Default to light theme
     return false;
   }
@@ -48,7 +48,7 @@ export class ThemeService {
   private setTheme(isDark: boolean): void {
     this.darkMode.next(isDark);
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    
+
     // Apply theme class to document
     if (isDark) {
       document.documentElement.classList.add('dark-theme');

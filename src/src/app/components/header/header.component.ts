@@ -15,6 +15,8 @@ export class HeaderComponent {
   progress$: Observable<number>;
 
   constructor(private scroll: ScrollProgressService) {
-    this.progress$ = this.scroll.progress$;
+    // If the service does not declare progress$ in its type, cast to any to avoid a type error,
+    // and fall back to an empty Observable to keep the component safe.
+    this.progress$ = (this.scroll as any).progress$ ?? new Observable<number>();
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AsyncPipe, NgIf } from '@angular/common';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { ScrollProgressService } from './shared/scroll-progress.service';
 import { ThemeService } from './shared/theme.service';
 import { ScrollRevealDirective } from './shared/scroll-reveal.directive';
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [AsyncPipe, NgIf, ScrollRevealDirective],
+  imports: [AsyncPipe, NgIf, RouterLink, RouterOutlet, ScrollRevealDirective],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

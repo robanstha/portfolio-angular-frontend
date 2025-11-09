@@ -1,7 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { TimelineComponent } from '../timeline/timeline.component';
-import { SkillsComponent } from '../skills/skills.component';
-import { ContactComponent } from '../contact/contact.component';
+import { RouterLink } from '@angular/router';
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive';
 import { CommonModule } from '@angular/common';
 
@@ -9,11 +7,9 @@ import { CommonModule } from '@angular/common';
   selector: 'app-home',
   standalone: true,
   imports: [
-    TimelineComponent,
-    SkillsComponent,
-    ContactComponent,
+    CommonModule,
+    RouterLink,
     ScrollRevealDirective,
-    CommonModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

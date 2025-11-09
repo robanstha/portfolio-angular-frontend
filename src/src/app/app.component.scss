@@ -135,12 +135,6 @@
     }
   }
 }
-cursor: pointer;
-color: #104F55;
-opacity: .8;
-transition: .3s;
-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
 
 .light {
   position: absolute;
@@ -634,9 +628,9 @@ transform: translate(95vw,90vh);
 
 /* reduce motion */
 @media (prefers-reduced-motion: reduce) {
-  [appScrollReveal], .reveal { 
-    transition: none !important; 
-    transform: none !important; 
-    opacity: 1 !important; 
+  [appScrollReveal], .reveal {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
   }
 }
