@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { ThemeService } from './shared/theme.service';
 import { Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
@@ -7,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   template: `
     <div class="app-container" [class.dark-theme]="isDark$ | async">
       <!-- Navigation -->
@@ -15,11 +16,11 @@ import { FormsModule } from '@angular/forms';
         <div class="nav-content">
           <div class="logo">RS</div>
           <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#projects">Projects</a>
-            <a href="#skills">Skills</a>
-            <a href="#contact">Contact</a>
+            <a [routerLink]="[]" [fragment]="'home'" (click)="scrollToSection('home')">Home</a>
+            <a [routerLink]="[]" [fragment]="'about'" (click)="scrollToSection('about')">About</a>
+            <a [routerLink]="[]" [fragment]="'projects'" (click)="scrollToSection('projects')">Projects</a>
+            <a [routerLink]="[]" [fragment]="'skills'" (click)="scrollToSection('skills')">Skills</a>
+            <a [routerLink]="[]" [fragment]="'contact'" (click)="scrollToSection('contact')">Contact</a>
             <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="'Toggle ' + ((isDark$ | async) ? 'light' : 'dark') + ' theme'">
               <i class="fas" [class.fa-sun]="isDark$ | async" [class.fa-moon]="!(isDark$ | async)"></i>
             </button>
@@ -35,8 +36,8 @@ import { FormsModule } from '@angular/forms';
             <h2>Software Engineer</h2>
             <p>Building elegant solutions to complex problems</p>
             <div class="cta-buttons">
-              <a href="#projects" class="btn primary">View My Work</a>
-              <a href="#contact" class="btn secondary">Get in Touch</a>
+                <a [routerLink]="[]" [fragment]="'projects'" (click)="scrollToSection('projects')" class="btn primary">View My Work</a>
+                <a [routerLink]="[]" [fragment]="'contact'" (click)="scrollToSection('contact')" class="btn secondary">Get in Touch</a>
             </div>
           </div>
           <div class="hero-image">
@@ -215,5 +216,12 @@ export class AppComponent implements OnInit {
   onSubmit(): void {
     console.log('Form submitted:', this.contactForm);
     // Implement form submission logic
+  }
+
+  scrollToSection(sectionId: string): void {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 }
