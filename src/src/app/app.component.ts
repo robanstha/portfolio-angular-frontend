@@ -16,11 +16,11 @@ import { FormsModule } from '@angular/forms';
         <div class="nav-content">
           <div class="logo">RS</div>
           <div class="nav-links">
-            <a [routerLink]="[]" [fragment]="'home'" (click)="scrollToSection('home')">Home</a>
-            <a [routerLink]="[]" [fragment]="'about'" (click)="scrollToSection('about')">About</a>
-            <a [routerLink]="[]" [fragment]="'projects'" (click)="scrollToSection('projects')">Projects</a>
-            <a [routerLink]="[]" [fragment]="'skills'" (click)="scrollToSection('skills')">Skills</a>
-            <a [routerLink]="[]" [fragment]="'contact'" (click)="scrollToSection('contact')">Contact</a>
+            <a (click)="scrollToSection('home')" [routerLink]="['']" fragment="home">Home</a>
+            <a (click)="scrollToSection('about')" [routerLink]="['']" fragment="about">About</a>
+            <a (click)="scrollToSection('projects')" [routerLink]="['']" fragment="projects">Projects</a>
+            <a (click)="scrollToSection('skills')" [routerLink]="['']" fragment="skills">Skills</a>
+            <a (click)="scrollToSection('contact')" [routerLink]="['']" fragment="contact">Contact</a>
             <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="'Toggle ' + ((isDark$ | async) ? 'light' : 'dark') + ' theme'">
               <i class="fas" [class.fa-sun]="isDark$ | async" [class.fa-moon]="!(isDark$ | async)"></i>
             </button>
@@ -36,8 +36,8 @@ import { FormsModule } from '@angular/forms';
             <h2>Software Engineer</h2>
             <p>Building elegant solutions to complex problems</p>
             <div class="cta-buttons">
-                <a [routerLink]="[]" [fragment]="'projects'" (click)="scrollToSection('projects')" class="btn primary">View My Work</a>
-                <a [routerLink]="[]" [fragment]="'contact'" (click)="scrollToSection('contact')" class="btn secondary">Get in Touch</a>
+                <a (click)="scrollToSection('projects')" [routerLink]="['']" fragment="projects" class="btn primary">View My Work</a>
+                <a (click)="scrollToSection('contact')" [routerLink]="['']" fragment="contact" class="btn secondary">Get in Touch</a>
             </div>
           </div>
           <div class="hero-image">
@@ -221,7 +221,8 @@ export class AppComponent implements OnInit {
   scrollToSection(sectionId: string): void {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.pushState({}, '', `#${sectionId}`);
     }
   }
 }
