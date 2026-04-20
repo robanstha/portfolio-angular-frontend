@@ -20,7 +20,11 @@ jobs:
           fetch-depth: 0
 
       - name: Log in to GHCR
-        run: echo "${{ secrets.GH_PAT }}" | docker login ghcr.io -u robanstha --password-stdin
+        uses: docker/login-action@v3.4.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and Push the image to GHCR
         run: |
