@@ -1,17 +1,22 @@
-FROM node:22.0.0
-
-RUN apt-get update && apt-get install -y vim && apt-get clean
-
-# ADD src/package.json /src/package.json
-
-ADD src /src
+# Development Dockerfile
+FROM node:22-alpine
 
 WORKDIR /src
 
-RUN npm install -g @angular/cli
+# Install development dependencies
+RUN npm install -g @angular/cli@latest
 
-RUN npm install
+# Copy package files
+COPY src/package*.json ./
 
-# RUN npm run build --prod
+# Install dependencies
+RUN npm ci
 
+# Copy source
+COPY src/ .
+
+# Expose dev server
 EXPOSE 4200
+
+# Run development server
+CMD ["npm", "start"]

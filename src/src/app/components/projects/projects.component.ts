@@ -1,29 +1,49 @@
-import { NgFor } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { PortfolioService } from '../../core/services/portfolio.service';
+import { Project } from '../../core/models/portfolio.models';
+import { Observable } from 'rxjs';
+import { ProjectCardComponent } from './project-card/project-card.component';
+import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive';
 
+/**
+ * ProjectsComponent
+ * Displays grid of project cards fetched from PortfolioService
+ */
 @Component({
   selector: 'app-projects',
-  imports: [
-    NgFor
-  ],
-  templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.scss']
-})
-export class ProjectsComponent {
-  projects = [
-    {
-      title: 'Project One',
-      description: 'A brief description of project one.',
-      image: 'assets/project1.png',
-    },
-    {
-      title: 'Project Two',
-      description: 'A brief description of project two.',
-      image: 'assets/project2.png',
-    },
-  ];
+  standalone: true,
+  imports: [CommonModule, ProjectCardComponent, ScrollRevealDirective],
+  template: `
+    <section id="projects" class="projects">
+      <div class="container">
+        <h2 class="section-title" appScrollReveal>Featured Projects</h2>
 
-  viewDetails(project: any) {
-    alert(`Project Details:\n${project.title}\n${project.description}`);
+        <div class="project-grid">
+          <app-project-card
+            *ngFor="let project of projects$ | async; let i = index"
+            [project]="project"
+            [appScrollReveal]="true"
+            [style.animation-delay]="(i * 0.1) + 's'">
+          </app-project-card>
+        </div>
+
+        <div class="projects-footer">
+          <p>Interested in seeing more?</p>
+          <a href="#" class="btn btn-secondary" title="View all projects">View All Projects →</a>
+        </div>
+      </div>
+    </section>
+  `,
+  styleUrl: './projects.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class ProjectsComponent implements OnInit {
+  private readonly portfolioService = inject(PortfolioService);
+
+  projects$!: Observable<Project[]>;
+
+  ngOnInit(): void {
+    this.projects$ = this.portfolioService.getProjects();
   }
 }
