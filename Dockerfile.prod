@@ -17,7 +17,7 @@ RUN npm ci --only=production && \
 COPY src/ .
 
 # Build Angular application for production
-RUN npm run build -- --configuration production --optimization --build-optimizer --source-map=false
+RUN npm run build -- --configuration production
 
 # Stage 2: Static analysis (optional - remove if not needed)
 # FROM builder as analyzer
@@ -47,7 +47,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY default.conf /etc/nginx/conf.d/default.conf
 
 # Set permissions
-RUN chown -R nginx:nginx /usr/share/nginx/html /var/cache/nginx /var/log/nginx /var/run/nginx && \
+RUN chown -R nginx:nginx /usr/share/nginx/html /var/cache/nginx /var/log/nginx && \
     chmod -R 755 /usr/share/nginx/html
 
 # Switch to non-root user
