@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { fadeIn, slideInDown } from '../shared/animations';
+import { fadeIn, slideInDown } from '../../shared/animations';
 
 @Component({
   selector: 'app-navigation',

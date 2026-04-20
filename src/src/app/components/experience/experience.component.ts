@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { fadeInUp } from '../shared/animations';
+import { fadeInUp } from '../../shared/animations';
 
 interface Experience {
   id: string;

@@ -1,48 +1,94 @@
 services:
-  # Development service
-  app-dev:
+  # Development environment
+  portfolio-dev:
     build:
       context: .
       dockerfile: Dockerfile
+      target: development
     container_name: portfolio-dev
+    image: portfolio-angular:dev
     ports:
       - "4200:4200"
     volumes:
-      - ./src:/src
-      - /src/node_modules
+      - ./src:/app:cached
+      - /app/node_modules
     environment:
       - NODE_ENV=development
-      - ANGULAR_ENV=development
-    command: npm start -- --poll
-    networks:
-      - portfolio-network
+      - NG_HOST=0.0.0.0
+      - NG_PORT=4200
+    restart: unless-stopped
     profiles:
       - dev
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4200/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
-  # Production service
-  app-prod:
+  # Testing environment
+  portfolio-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: testing
+    container_name: portfolio-test
+    image: portfolio-angular:test
+    volumes:
+      - ./src:/app:cached
+      - /app/node_modules
+    environment:
+      - NODE_ENV=test
+    profiles:
+      - test
+    command: npm run test -- --watch=false --browsers=ChromeHeadless
+
+  # Production build preview
+  portfolio-build-preview:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build-preview
+    container_name: portfolio-build-preview
+    image: portfolio-angular:build-preview
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./src:/app:cached
+      - /app/node_modules
+    profiles:
+      - build-preview
+
+  # Production environment with nginx
+  portfolio-prod:
     build:
       context: .
       dockerfile: Dockerfile.prod
     container_name: portfolio-prod
+    image: portfolio-angular:latest
     ports:
-      - "80:80"
+      - "80:8080"
     environment:
       - NODE_ENV=production
-    healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-    networks:
-      - portfolio-network
+    restart: always
     profiles:
       - prod
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    security_opt:
+      - no-new-privileges:true
 
+# Network configuration
 networks:
-  portfolio-network:
+  default:
+    name: portfolio-network
     driver: bridge
 
+# Volume definitions
 volumes:
   node_modules:
+    driver: local

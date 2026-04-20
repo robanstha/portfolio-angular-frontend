@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
-import { fadeInUp, textReveal } from '../shared/animations';
+import { fadeInUp, textReveal } from '../../shared/animations';
 
 @Component({
   selector: 'app-hero',

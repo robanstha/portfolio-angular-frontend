@@ -221,7 +221,7 @@ a {
   transition: color $transition-base;
   
   &:hover {
-    color: lighten($color-primary, 10%);
+    color: #25E8FF;
   }
 }
 
@@ -308,7 +308,7 @@ code {
   padding: $space-md;
   
   &:hover {
-    color: lighten($color-primary, 10%);
+    color: #25E8FF;
   }
 }
 
@@ -361,7 +361,7 @@ code {
   border-radius: 4px;
   
   &:hover {
-    background: lighten($color-primary, 10%);
+    background: #25E8FF;
   }
 }
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { fadeIn } from '../shared/animations';
+import { fadeIn } from '../../shared/animations';
 
 @Component({
   selector: 'app-footer',

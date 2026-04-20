@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { trigger, state, style, animate, transition, query, stagger } from '@angular/animations';
-import { fadeInUp, hoverScale } from '../shared/animations';
+import { fadeInUp, hoverScale } from '../../shared/animations';
 
 interface Skill {
   id: string;

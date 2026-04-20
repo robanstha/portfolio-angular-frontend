@@ -1,133 +1,165 @@
-import { trigger, state, style, animate, transition, keyframes, query, stagger } from '@angular/animations';
-import { ANIMATIONS } from './design-system';
+/**
+ * Animation utilities for reusable Angular animations
+ * Provides common fade, slide, and scale animations
+ */
 
-const { duration, easing } = ANIMATIONS;
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+  keyframes,
+  query,
+  stagger
+} from '@angular/animations';
 
-// ===== FADE ANIMATIONS =====
+/**
+ * Fade in animation
+ */
 export const fadeIn = trigger('fadeIn', [
   transition(':enter', [
     style({ opacity: 0 }),
-    animate(`${duration.base} ${easing.easeOut}`, style({ opacity: 1 }))
-  ]),
-  transition(':leave', [
-    animate(`${duration.base} ${easing.easeIn}`, style({ opacity: 0 }))
+    animate('600ms ease-out', style({ opacity: 1 }))
   ])
 ]);
 
+/**
+ * Fade in up animation (commonly used for entrance)
+ */
 export const fadeInUp = trigger('fadeInUp', [
   transition(':enter', [
+    style({ opacity: 0, transform: 'translateY(40px)' }),
+    animate('600ms 0.2s ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+  ])
+]);
+
+/**
+ * Fade out animation
+ */
+export const fadeOut = trigger('fadeOut', [
+  transition(':leave', [
+    animate('300ms ease-out', style({ opacity: 0 }))
+  ])
+]);
+
+/**
+ * Slide in from left
+ */
+export const slideInLeft = trigger('slideInLeft', [
+  transition(':enter', [
+    style({ opacity: 0, transform: 'translateX(-40px)' }),
+    animate('600ms ease-out', style({ opacity: 1, transform: 'translateX(0)' }))
+  ])
+]);
+
+/**
+ * Slide in from right
+ */
+export const slideInRight = trigger('slideInRight', [
+  transition(':enter', [
+    style({ opacity: 0, transform: 'translateX(40px)' }),
+    animate('600ms ease-out', style({ opacity: 1, transform: 'translateX(0)' }))
+  ])
+]);
+
+/**
+ * Slide in from top
+ */
+export const slideInDown = trigger('slideInDown', [
+  transition(':enter', [
+    style({ opacity: 0, transform: 'translateY(-40px)' }),
+    animate('600ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+  ])
+]);
+
+/**
+ * Text reveal animation
+ */
+export const textReveal = trigger('textReveal', [
+  transition(':enter', [
     style({ opacity: 0, transform: 'translateY(20px)' }),
-    animate(`${duration.base} ${easing.easeOut}`, style({ opacity: 1, transform: 'translateY(0)' }))
+    animate('800ms 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)', style({ opacity: 1, transform: 'translateY(0)' }))
   ])
 ]);
 
-export const fadeInDown = trigger('fadeInDown', [
+/**
+ * Scale up animation
+ */
+export const scaleUp = trigger('scaleUp', [
   transition(':enter', [
-    style({ opacity: 0, transform: 'translateY(-20px)' }),
-    animate(`${duration.base} ${easing.easeOut}`, style({ opacity: 1, transform: 'translateY(0)' }))
+    style({ opacity: 0, transform: 'scale(0.9)' }),
+    animate('500ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))
   ])
 ]);
 
-// ===== SCALE ANIMATIONS =====
-export const scaleIn = trigger('scaleIn', [
+/**
+ * Hover scale animation
+ */
+export const hoverScale = trigger('hoverScale', [
+  state('normal', style({ transform: 'scale(1)' })),
+  state('hover', style({ transform: 'scale(1.05)' })),
+  transition('normal <=> hover', animate('300ms ease-in-out'))
+]);
+
+/**
+ * Hover glow animation (typically for cards)
+ */
+export const hoverGlow = trigger('hoverGlow', [
+  state('normal', style({ 
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' 
+  })),
+  state('hover', style({ 
+    boxShadow: '0 12px 24px rgba(255, 107, 53, 0.3)' 
+  })),
+  transition('normal <=> hover', animate('300ms ease-in-out'))
+]);
+
+/**
+ * Pulse animation
+ */
+export const pulse = trigger('pulse', [
   transition(':enter', [
-    style({ opacity: 0, transform: 'scale(0.95)' }),
-    animate(`${duration.base} ${easing.spring}`, style({ opacity: 1, transform: 'scale(1)' }))
+    animate('2s infinite', keyframes([
+      style({ opacity: 1, offset: 0 }),
+      style({ opacity: 0.5, offset: 0.5 }),
+      style({ opacity: 1, offset: 1 })
+    ]))
   ])
 ]);
 
-// ===== STAGGER ANIMATIONS =====
-export const staggerChildren = trigger('staggerChildren', [
+/**
+ * Stagger animation for lists
+ */
+export const staggerAnimation = trigger('stagger', [
   transition('* <=> *', [
     query(':enter', [
-      style({ opacity: 0, transform: 'translateY(10px)' }),
-      stagger(50, [
-        animate(`${duration.base} ${easing.easeOut}`, style({ opacity: 1, transform: 'translateY(0)' }))
+      style({ opacity: 0, transform: 'translateY(20px)' }),
+      stagger('50ms', [
+        animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
       ])
     ], { optional: true })
   ])
 ]);
 
-// ===== SLIDE ANIMATIONS =====
-export const slideInLeft = trigger('slideInLeft', [
+/**
+ * Rotate animation
+ */
+export const rotate = trigger('rotate', [
+  state('normal', style({ transform: 'rotate(0deg)' })),
+  state('rotate', style({ transform: 'rotate(360deg)' })),
+  transition('normal => rotate', animate('1s linear'))
+]);
+
+/**
+ * Bounce animation
+ */
+export const bounce = trigger('bounce', [
   transition(':enter', [
-    style({ opacity: 0, transform: 'translateX(-30px)' }),
-    animate(`${duration.base} ${easing.easeOut}`, style({ opacity: 1, transform: 'translateX(0)' }))
-  ])
-]);
-
-export const slideInRight = trigger('slideInRight', [
-  transition(':enter', [
-    style({ opacity: 0, transform: 'translateX(30px)' }),
-    animate(`${duration.base} ${easing.easeOut}`, style({ opacity: 1, transform: 'translateX(0)' }))
-  ])
-]);
-
-// ===== HOVER ANIMATIONS =====
-export const hoverScale = trigger('hoverScale', [
-  state('hover', style({ transform: 'scale(1.05)' })),
-  state('normal', style({ transform: 'scale(1)' })),
-  transition('normal <=> hover', animate(`${duration.fast} ${easing.easeOut}`))
-]);
-
-export const hoverGlow = trigger('hoverGlow', [
-  state('hover', style({ 
-    boxShadow: '0 0 30px rgba(0, 217, 255, 0.5)',
-    transform: 'translateY(-5px)'
-  })),
-  state('normal', style({ 
-    boxShadow: '0 0 15px rgba(0, 217, 255, 0.2)',
-    transform: 'translateY(0)'
-  })),
-  transition('normal <=> hover', animate(`${duration.fast} ${easing.easeOut}`))
-]);
-
-// ===== LOADING ANIMATION =====
-export const loadingPulse = trigger('loadingPulse', [
-  state('loading', style({ opacity: 0.6 })),
-  state('loaded', style({ opacity: 1 })),
-  transition('loading => loaded', animate(`${duration.slow}`))
-]);
-
-// ===== EXPAND ANIMATION =====
-export const expandCollapse = trigger('expandCollapse', [
-  state('collapsed', style({
-    height: '0',
-    opacity: '0',
-    overflow: 'hidden'
-  })),
-  state('expanded', style({
-    height: '*',
-    opacity: '1',
-    overflow: 'visible'
-  })),
-  transition('collapsed <=> expanded', [
-    animate(`${duration.base} ${easing.easeOut}`)
-  ])
-]);
-
-// ===== ROTATE ANIMATION =====
-export const rotateIn = trigger('rotateIn', [
-  transition(':enter', [
-    style({ opacity: 0, transform: 'rotate(-10deg) scale(0.9)' }),
-    animate(`${duration.base} ${easing.spring}`, style({ opacity: 1, transform: 'rotate(0deg) scale(1)' }))
-  ])
-]);
-
-// ===== TEXT REVEAL =====
-export const textReveal = trigger('textReveal', [
-  transition(':enter', [
-    style({ clipPath: 'inset(0 100% 0 0)' }),
-    animate(`${duration.slow} ${easing.easeOut}`, style({ clipPath: 'inset(0 0 0 0)' }))
-  ])
-]);
-
-// ===== NUMBER COUNTER =====
-export const countUp = trigger('countUp', [
-  transition(':enter', [
-    animate(`${duration.verySlow}`, keyframes([
-      style({ opacity: 0 }),
-      style({ opacity: 1 })
+    animate('0.6s', keyframes([
+      style({ transform: 'translateY(0)', offset: 0 }),
+      style({ transform: 'translateY(-20px)', offset: 0.5 }),
+      style({ transform: 'translateY(0)', offset: 1 })
     ]))
   ])
 ]);

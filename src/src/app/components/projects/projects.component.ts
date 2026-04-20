@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { fadeInUp, hoverGlow } from '../shared/animations';
+import { fadeInUp, hoverGlow } from '../../shared/animations';
 
 interface Project {
   id: string;
@@ -29,20 +29,20 @@ interface Project {
         <div class="featured-project" [@fadeInUp]>
           <div class="featured-content">
             <div class="featured-image">
-              <div class="image-placeholder">{{ projects[0]?.title }}</div>
+              <div class="image-placeholder">{{ projects[0].title }}</div>
             </div>
             <div class="featured-info">
               <span class="badge featured-badge">Featured</span>
-              <h3>{{ projects[0]?.title }}</h3>
-              <p>{{ projects[0]?.description }}</p>
+              <h3>{{ projects[0].title }}</h3>
+              <p>{{ projects[0].description }}</p>
               
               <div class="tech-stack">
-                <span *ngFor="let tech of projects[0]?.technologies" class="tech-tag">
+                <span *ngFor="let tech of projects[0].technologies" class="tech-tag">
                   {{ tech }}
                 </span>
               </div>
 
-              <a href="{{ projects[0]?.link }}" class="btn btn-primary" target="_blank">
+              <a href="{{ projects[0].link }}" class="btn btn-primary" target="_blank">
                 View Project
                 <span class="arrow">→</span>
               </a>
