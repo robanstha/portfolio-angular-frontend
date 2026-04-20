@@ -1,64 +1,406 @@
-/* Theme Variables */
-:root {
-  --primary: #2563eb;
-  --primary-light: #3b82f6;
-  --text: #1f2937;
-  --text-light: #4b5563;
-  --background: #ffffff;
-  --background-alt: #f3f4f6;
-  --border: #e5e7eb;
-  --shadow: rgba(0, 0, 0, 0.1);
+// ============================================
+// DESIGN SYSTEM VARIABLES
+// ============================================
+
+// Colors
+$color-primary: #00D9FF;
+$color-secondary: #7C3AED;
+$color-accent: #FF006E;
+
+// Dark mode (default)
+$dark-bg: #0A0E27;
+$dark-surface: #1A1F3A;
+$dark-surface-alt: #252B45;
+$dark-border: #3A4158;
+$dark-text: #E8EAED;
+$dark-text-secondary: #9CA3AF;
+
+// Light mode
+$light-bg: #FFFFFF;
+$light-surface: #F8FAFC;
+$light-surface-alt: #F1F5F9;
+$light-border: #E2E8F0;
+$light-text: #1E293B;
+$light-text-secondary: #64748B;
+
+// Gradients
+$gradient-primary: linear-gradient(135deg, #00D9FF 0%, #7C3AED 100%);
+$gradient-accent: linear-gradient(135deg, #FF006E 0%, #7C3AED 100%);
+$gradient-dark: linear-gradient(135deg, #0A0E27 0%, #1A1F3A 100%);
+
+// Typography
+$font-display: 'Sohne', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-code: 'JetBrains Mono', 'Courier New', monospace;
+
+// Spacing
+$space-xs: 0.25rem;
+$space-sm: 0.5rem;
+$space-md: 1rem;
+$space-lg: 1.5rem;
+$space-xl: 2rem;
+$space-2xl: 3rem;
+$space-3xl: 4rem;
+$space-4xl: 6rem;
+
+// Breakpoints
+$bp-mobile: 640px;
+$bp-tablet: 768px;
+$bp-desktop: 1024px;
+$bp-wide: 1280px;
+$bp-ultra: 1536px;
+
+// Shadows
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$shadow-glow: 0 0 20px rgba(0, 217, 255, 0.3);
+
+// Transitions
+$transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-spring: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// ============================================
+// MIXINS
+// ============================================
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Dark Theme */
-.dark-theme {
-  --primary: #3b82f6;
-  --primary-light: #60a5fa;
-  --text: #f9fafb;
-  --text-light: #d1d5db;
-  --background: #111827;
-  --background-alt: #1f2937;
-  --border: #374151;
-  --shadow: rgba(0, 0, 0, 0.25);
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* Reset & Base Styles */
-*, *::before, *::after {
-  box-sizing: border-box;
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin gradient-text {
+  background: $gradient-primary;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@mixin glass-effect {
+  background: rgba(26, 31, 58, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(58, 65, 88, 0.5);
+}
+
+@mixin glow-effect($color: $color-primary) {
+  box-shadow: 0 0 20px rgba($color, 0.3);
+  transition: box-shadow $transition-base;
+  
+  &:hover {
+    box-shadow: 0 0 30px rgba($color, 0.6);
+  }
+}
+
+@mixin button-reset {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+@mixin responsive($bp) {
+  @if $bp == 'mobile' {
+    @media (max-width: $bp-tablet - 1px) { @content; }
+  }
+  @else if $bp == 'tablet' {
+    @media (min-width: $bp-tablet) and (max-width: $bp-desktop - 1px) { @content; }
+  }
+  @else if $bp == 'desktop' {
+    @media (min-width: $bp-desktop) { @content; }
+  }
+  @else if $bp == 'wide' {
+    @media (min-width: $bp-wide) { @content; }
+  }
+  @else {
+    @media (min-width: $bp) { @content; }
+  }
+}
+
+// ============================================
+// GLOBAL STYLES
+// ============================================
+
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: $dark-bg;
+  color: $dark-text;
+  font-family: $font-body;
+  font-size: 1rem;
   line-height: 1.6;
-  margin: 0;
-  padding: 0;
   overflow-x: hidden;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+// ============================================
+// TYPOGRAPHY
+// ============================================
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-display;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: $space-md;
 }
 
-button {
-  font-family: inherit;
+h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  @include responsive('mobile') {
+    font-size: 2.25rem;
+  }
+}
+
+h2 {
+  font-size: 2.5rem;
+  @include responsive('mobile') {
+    font-size: 1.875rem;
+  }
+}
+
+h3 {
+  font-size: 1.875rem;
+  @include responsive('mobile') {
+    font-size: 1.5rem;
+  }
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+p {
+  color: $dark-text-secondary;
+  margin-bottom: $space-md;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+a {
+  color: $color-primary;
+  text-decoration: none;
+  transition: color $transition-base;
+  
+  &:hover {
+    color: lighten($color-primary, 10%);
+  }
+}
+
+code {
+  font-family: $font-code;
+  background: $dark-surface;
+  padding: $space-sm $space-md;
+  border-radius: 4px;
+  color: $color-primary;
+  font-size: 0.875rem;
+}
+
+// ============================================
+// CONTAINERS
+// ============================================
+
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 $space-xl;
+  
+  @include responsive('mobile') {
+    padding: 0 $space-lg;
+  }
+}
+
+.section {
+  padding: $space-4xl $space-xl;
+  
+  @include responsive('mobile') {
+    padding: $space-3xl $space-lg;
+  }
+}
+
+// ============================================
+// BUTTONS
+// ============================================
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-md;
+  padding: $space-lg $space-2xl;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all $transition-base;
   cursor: pointer;
+  border: 2px solid transparent;
+  
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
+.btn-primary {
+  background: $gradient-primary;
+  color: $dark-bg;
+  @include glow-effect();
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.btn-secondary {
+  background: $dark-surface;
+  color: $color-primary;
+  border-color: $color-primary;
+  
+  &:hover {
+    background: $dark-surface-alt;
+  }
+}
+
+.btn-text {
+  @include button-reset;
+  color: $color-primary;
+  font-weight: 600;
+  gap: $space-sm;
+  padding: $space-md;
+  
+  &:hover {
+    color: lighten($color-primary, 10%);
+  }
+}
+
+// ============================================
+// CARDS
+// ============================================
+
+.card {
+  @include glass-effect;
+  border-radius: 12px;
+  padding: $space-xl;
+  transition: all $transition-base;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+  }
+}
+
+// ============================================
+// BADGES
+// ============================================
+
+.badge {
+  display: inline-block;
+  padding: $space-sm $space-lg;
+  background: $dark-surface;
+  color: $color-primary;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1px solid $color-primary;
+}
+
+// ============================================
+// SCROLLBAR
+// ============================================
+
 ::-webkit-scrollbar {
-  display: none;
+  width: 8px;
+  height: 8px;
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
-html {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+::-webkit-scrollbar-track {
+  background: $dark-bg;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color-primary;
+  border-radius: 4px;
+  
+  &:hover {
+    background: lighten($color-primary, 10%);
+  }
+}
+
+// ============================================
+// UTILITIES
+// ============================================
+
+.text-center {
+  text-align: center;
+}
+
+.text-primary {
+  color: $color-primary !important;
+}
+
+.text-secondary {
+  color: $dark-text-secondary !important;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+
+.mb-auto {
+  margin-bottom: auto;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }

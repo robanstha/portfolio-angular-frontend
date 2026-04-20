@@ -1,37 +1,40 @@
-import { Directive, ElementRef, Input, AfterViewInit, PLATFORM_ID, inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Directive, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
 
-@Directive({ selector: '[appScrollReveal]', standalone: true })
-export class ScrollRevealDirective implements AfterViewInit {
-  private readonly platformId = inject(PLATFORM_ID);
-  @Input() threshold = 0.12;
+@Directive({
+  selector: '[appScrollReveal]',
+  standalone: true
+})
+export class ScrollRevealDirective implements OnInit, OnDestroy {
+  @Input() appScrollReveal = true;
+  @Input() threshold = 0.1;
+  
+  private observer: IntersectionObserver | null = null;
 
-  constructor(private el: ElementRef<HTMLElement>) {}
+  constructor(private el: ElementRef) {}
 
-  ngAfterViewInit() {
-    if (!isPlatformBrowser(this.platformId)) return;
+  ngOnInit() {
+    if (!this.appScrollReveal) return;
 
-    // Check for reduced motion preference
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      this.el.nativeElement.classList.add('reveal');
-      return;
-    }
+    const options: IntersectionObserverInit = {
+      threshold: this.threshold,
+      rootMargin: '0px 0px -100px 0px'
+    };
 
-    // Check for IntersectionObserver support
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('reveal');
-            io.unobserve(entry.target);
-          }
-        });
-      }, { threshold: this.threshold });
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          this.el.nativeElement.classList.add('revealed');
+          this.observer?.unobserve(entry.target);
+        }
+      });
+    }, options);
 
-      io.observe(this.el.nativeElement);
-    } else {
-      // Fallback for browsers that don't support IntersectionObserver
-      this.el.nativeElement.classList.add('reveal');
+    this.observer.observe(this.el.nativeElement);
+  }
+
+  ngOnDestroy() {
+    if (this.observer) {
+      this.observer.disconnect();
     }
   }
 }
